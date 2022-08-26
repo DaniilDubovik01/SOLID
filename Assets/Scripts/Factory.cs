@@ -7,11 +7,14 @@ namespace SolidDemo
     {
         private readonly List<Type> objectsToSpawn;
         private readonly ILogger logger;
+        private readonly IAnalyticsTracker analyticsTracker;
 
-        public Factory(ILogger logger)
+        public Factory(ILogger logger, IAnalyticsTracker analyticsTracker)
         {
             objectsToSpawn = new List<Type>();
+            
             this.logger = logger;
+            this.analyticsTracker = analyticsTracker;
         }
 
         public void Add<T>()
@@ -27,6 +30,8 @@ namespace SolidDemo
             {
                 logger.LogMessage($"{nameof(Factory)}: {spawnedObject.GetType().Name} has been spawned.");
             }
+            
+            analyticsTracker?.LogSpawnedObject<T>();
 
             return spawnedObject;
         }

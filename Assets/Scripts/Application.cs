@@ -8,7 +8,10 @@ namespace SolidDemo
 
         private void Awake()
         {
-            factory = new Factory(new UnityLogger());
+            var unityLogger = new UnityLogger();
+            var solidAnalyticsTracker = new SolidAnalyticsTracker(unityLogger);
+            
+            factory = new Factory(unityLogger, solidAnalyticsTracker);
             factory.Add<Soldier>();
             factory.Add<UberSoldier>();
         }
@@ -16,6 +19,8 @@ namespace SolidDemo
         private void Start()
         {
             factory.Spawn<Soldier>();
+            factory.Spawn<Soldier>();
+            factory.Spawn<UberSoldier>();
             factory.Spawn<UberSoldier>();
         }
     }
