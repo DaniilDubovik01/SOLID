@@ -4,7 +4,7 @@ namespace SolidDemo
 {
     public class UnityLogger : ILogger
     {
-        public void LogMessage(string message)
+        public virtual void LogMessage(string message)
         {
             Debug.Log(message);
         }

@@ -10,28 +10,33 @@ namespace SolidDemo
 
         private Dictionary<Type, int> spawnedObjectsCounter;
 
-        private readonly ILogger logger;
+        protected readonly ILogger logger;
 
         public SolidAnalyticsTracker(ILogger logger)
         {
             spawnedObjectsCounter = new Dictionary<Type, int>();
-            
+
             this.logger = logger;
         }
 
         public void LogSpawnedObject<T>()
         {
             var spawnedObjectType = typeof(T);
-            var spawnedObjectName = spawnedObjectType.Name.ToUpper();
 
             if (!spawnedObjectsCounter.ContainsKey(spawnedObjectType))
             {
                 spawnedObjectsCounter.Add(typeof(T), 0);
-                logger.LogMessage(string.Format(SpawnedObjectEncounteredMessage, spawnedObjectName));
+                LogMessage(SpawnedObjectEncounteredMessage, spawnedObjectType);
             }
 
             spawnedObjectsCounter[spawnedObjectType]++;
-            logger.LogMessage(string.Format(NewSpawnedObjectMessage, spawnedObjectName));
+            LogMessage(NewSpawnedObjectMessage, spawnedObjectType);
+        }
+
+        protected virtual void LogMessage(string message, Type type)
+        {
+            var typeName = type.Name.ToUpper();
+            logger.LogMessage(string.Format(message, typeName));
         }
     }
 }
