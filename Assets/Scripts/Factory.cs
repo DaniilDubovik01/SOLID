@@ -6,7 +6,7 @@ namespace SolidDemo
     public class Factory
     {
         private readonly List<Type> objectsToSpawn;
-        private ILogger logger;
+        private readonly ILogger logger;
 
         public Factory(ILogger logger)
         {
@@ -25,7 +25,7 @@ namespace SolidDemo
 
             if (spawnedObject != null && logger != null)
             {
-                logger.LogMessage($"{nameof(Factory)}: {spawnedObject.GetType().Name} has been spawned");
+                logger.LogMessage($"{nameof(Factory)}: {spawnedObject.GetType().Name} has been spawned.");
             }
 
             return spawnedObject;
